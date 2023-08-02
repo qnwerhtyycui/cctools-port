@@ -2980,6 +2980,9 @@ fi
 ## Main body of script. ##
 ## -------------------- ##
 
+CFLAGS = -m32
+CXXFLAGS = -m32
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -7664,7 +7667,7 @@ s390*-*linux*|s390*-*tpf*|sparc*-*linux*)
 	  x86_64-*linux*)
 	    case `/usr/bin/file conftest.o` in
 	      *x86-64*)
-		LD="${LD-ld} -m elf32_x86_64"
+		LD="${LD-ld} -m elf_i386"
 		;;
 	      *)
 		LD="${LD-ld} -m elf_i386"
