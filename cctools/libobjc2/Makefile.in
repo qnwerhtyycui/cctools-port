@@ -368,9 +368,9 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LTLIBRARIES = libobjc.la
-libobjc_la_CPPFLAGS = -DTYPE_DEPENDENT_DISPATCH -DGNUSTEP -D__OBJC_RUNTIME_INTERNAL__=1 -D_XOPEN_SOURCE=500 -D__BSD_VISIBLE=1 -D_DEFAULT_SOURCE=1 -DNO_SELECTOR_MISMATCH_WARNINGS
-libobjc_la_CFLAGS = -std=gnu99 -fPIC -fexceptions $(WARNINGS)
-libobjc_la_OBJCFLAGS = -std=gnu99 $(OBJCWARNINGS)
+libobjc_la_CPPFLAGS = -m32 -DTYPE_DEPENDENT_DISPATCH -DGNUSTEP -D__OBJC_RUNTIME_INTERNAL__=1 -D_XOPEN_SOURCE=500 -D__BSD_VISIBLE=1 -D_DEFAULT_SOURCE=1 -DNO_SELECTOR_MISMATCH_WARNINGS
+libobjc_la_CFLAGS = -m32 -std=gnu99 -fPIC -fexceptions $(WARNINGS)
+libobjc_la_OBJCFLAGS = -m32 -std=gnu99 $(OBJCWARNINGS)
 libobjc_la_SOURCES = \
     NSBlocks.m\
     Protocol2.m\
@@ -450,7 +450,7 @@ clean-noinstLTLIBRARIES:
 	}
 
 libobjc.la: $(libobjc_la_OBJECTS) $(libobjc_la_DEPENDENCIES) $(EXTRA_libobjc_la_DEPENDENCIES) 
-	$(AM_V_OBJCLD)$(libobjc_la_LINK)  $(libobjc_la_OBJECTS) $(libobjc_la_LIBADD) $(LIBS)
+	$(AM_V_OBJCLD)$(libobjc_la_LINK) -m32 -Wl,  $(libobjc_la_OBJECTS) $(libobjc_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -474,13 +474,13 @@ libobjc_la-objc_msgSend.lo: objc_msgSend.S
 	$(AM_V_CPPAS)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CCAS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libobjc_la_CPPFLAGS) $(CPPFLAGS) $(AM_CCASFLAGS) $(CCASFLAGS) -c -o libobjc_la-objc_msgSend.lo `test -f 'objc_msgSend.S' || echo '$(srcdir)/'`objc_msgSend.S
 
 .c.o:
-	$(AM_V_CC)$(COMPILE) -c -o $@ $<
+	$(AM_V_CC)$(COMPILE) -m32 -Wl,-melf_i386 -c -o $@ $<
 
 .c.obj:
-	$(AM_V_CC)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+	$(AM_V_CC)$(COMPILE) -m32 -Wl,-melf_i386 -c -o $@ `$(CYGPATH_W) '$<'`
 
 .c.lo:
-	$(AM_V_CC)$(LTCOMPILE) -c -o $@ $<
+	$(AM_V_CC)$(LTCOMPILE) -m32 -Wl,-melf_i386 -c -o $@ $<
 
 libobjc_la-abi_version.lo: abi_version.c
 	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libobjc_la_CPPFLAGS) $(CPPFLAGS) $(libobjc_la_CFLAGS) $(CFLAGS) -c -o libobjc_la-abi_version.lo `test -f 'abi_version.c' || echo '$(srcdir)/'`abi_version.c
